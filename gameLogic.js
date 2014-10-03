@@ -3,8 +3,8 @@
 /*global console */
 //I have implemented a simple HTML UI in the test.html and you can test the game logic by actually play the game thru the UI
 //The following code was tested and confirmed functionality by pasting and running in google chrome console
-var gomokuGameCore = (function () {
 'use strict';
+angular.module('myApp.gameLogic', []).service('gameLogic', function() {
 function isEqual(object1, object2) {
 return JSON.stringify(object1) === JSON.stringify(object2);
 }
@@ -307,11 +307,7 @@ function getRiddles() {
     ]);
   }
   
-return {
-	isMoveOk: isMoveOk,
-	createNewBoard: createNewBoard,
-	createMove: createMove,
-	getExampleGame: getExampleGame, 
-	getRiddles: getRiddles
-};
-})();
+  this.isMoveOk = isMoveOk;
+  this.getExampleGame = getExampleGame;
+  this.getRiddles = getRiddles;
+});

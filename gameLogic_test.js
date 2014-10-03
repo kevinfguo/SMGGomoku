@@ -1,4 +1,11 @@
 describe("In Gomoku Logic", function(){
+var gomokuGameCore;
+
+  beforeEach(module("myApp.gameLogic"));
+
+  beforeEach(inject(function (gameLogic) {
+    gomokuGameCore = gameLogic;
+  }));
 	function expectMoveOk(turnIndexBeforeMove, stateBeforeMove, move) {
 	    expect(gomokuGameCore.isMoveOk({turnIndexBeforeMove: turnIndexBeforeMove,
 	      stateBeforeMove: stateBeforeMove,
