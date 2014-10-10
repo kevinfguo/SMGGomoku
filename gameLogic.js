@@ -306,7 +306,7 @@ function getRiddles() {
       {row: 9, col: 9, comment: "X wins by placing at 9, 9"}
     ]);
   }
-  
+  this.createMove = createMove;
   this.isMoveOk = isMoveOk;
   this.getExampleGame = getExampleGame;
   this.getRiddles = getRiddles;

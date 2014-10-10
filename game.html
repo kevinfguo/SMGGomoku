@@ -1,22 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
 <head>
-<style>
-			table, th, td {
-   			 	text-align: center;
-   			 	font-family: Arial;
-			}
-			.bdCell{
-				border: 1px solid black;
-			} 
-			table {
-    			border-collapse: collapse;
-			}
-			th, td, tr{
-				width:25px;
-				height:25px;
-			}
-		</style>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Gomoku</title>
@@ -26,31 +10,31 @@
   <script src="game.js"></script>
   <script src="gameLogic.js"></script>
   <script src="messageService.js"></script>
+  <script src="scaleBodyService.js"></script>
+  <script>
+  function startNewGame(){
+  location.reload();
+  };
+  </script>
   <!-- for local testing purposes ! -->
   <script src="http://yoav-zibin.github.io/emulator/platform.js"></script>
+  <link rel="stylesheet" type="text/css" href="game.css">
 </head>
 <body ng-controller="Ctrl">
-  <textarea ng-model="jsonState" rows=10 cols=100 readonly></textarea>
-  <table border="1">
-    <tr width="25px" height="25px" ng-repeat="row in board track by $index">
-      <td width="25px" height="25px" ng-repeat="cell in row track by $index">{{cell}}</td>
+	<div id="container">
+  <table>
+    <tr ng-repeat="row in board track by $index">
+      <td ng-repeat="cell in row track by $index"
+        ng-class="{cell: true, dark: (($index % 2 === 0 && $parent.$index % 2 ===0) || ($index % 2 !== 0 && $parent.$index % 2 !==0)), light: (($index % 2 !== 0 && $parent.$index % 2 ===0) || ($index % 2 === 0 && $parent.$index % 2 !==0))}"
+        ng-click="cellClicked($parent.$index, $index)">
+        <img class = "stone" ng-src ="{{placeDot(cell)}}"/>
+      </td>
     </tr>
   </table>
-  <textarea rows=10 cols=100 readonly>
-    All operations in GameApi:
-    [
-      {setTurn: {turnIndex: 1}},
-      {set: {key: "k", value: "v"}},
-      {endMatch: {endMatchScores: [42, -2]}},
-      {set: {key: "k", value: "v", visibleToPlayerIndexes: [0]}},
-      {setVisibility: {key: "k", visibleToPlayerIndexes: null}},
-      {shuffle: {keys: ["k1", "k2"]}},
-      {setRandomInteger: {key: "k", from: 0, to: 6}},
-      {"delete": {key: "k"}}
-    ]
-  </textarea>
-  <textarea ng-model="move" rows=10 cols=100></textarea>
-  <br>
-  <button ng-click="makeMove()">Make move</button>
+  <div id="alertbox">
+  	<p id="gamemsg"></p>
+  	<button onclick="startNewGame()" style="width:200px; height:40px; font-size: 20px">Start New Game</button>
+  </div>
+  </div>
 </body>
 </html>
