@@ -1,4 +1,3 @@
-//1
 describe("In Gomoku Logic", function(){
 var gomokuGameCore;
 
