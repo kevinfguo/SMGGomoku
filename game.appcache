@@ -9,6 +9,7 @@ messageService.js
 scaleBodyService.js
 stateService.js
 aiService.js
+http://yoav-zibin.github.io/emulator/platform.js
 game.js
 gameLogic.js
 game.css
