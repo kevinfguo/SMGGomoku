@@ -1,5 +1,5 @@
 'use strict';
-angular.module('myApp', ['ngTouch','ngDragDrop','myApp.aiService'])
+angular.module('myApp', ['ngTouch','myApp.aiService'])
   .controller('Ctrl', function (
       $window, $scope, $log, $timeout,
       aiService, gameService, scaleBodyService, gameLogic) {
