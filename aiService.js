@@ -1,4 +1,4 @@
-/*A major part of the following code was adopted from yjyao.com
+/*A major part of the following code wass adopted from yjyao.com
 */
 'use strict';
 angular.module('myApp.aiService', []).service('aiService', function() {
