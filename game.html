@@ -18,13 +18,9 @@
   <script src="http://yoav-zibin.github.io/emulator/messageService.js"></script>
   <script src="http://yoav-zibin.github.io/emulator/stateService.js"></script>
   <script>
-  var draggingon;
   function startNewGame(){
   location.reload();
   }
-  $(function() {
-    $( "#alertbox" ).draggable();
-  });
   $(function() {
   	if(window.innerHeight > window.innerWidth + 150){
   		document.getElementById("alertbox").style.top = "-140px";
