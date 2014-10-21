@@ -6,26 +6,37 @@
   <title>Gomoku</title>
   <meta name="description" content="Gomoku game">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular-touch.min.js"></script>
   <script src="game.js"></script>
   <script src="gameLogic.js"></script>
   <script src="aiService.js"></script>
-  <script src="scaleBodyService.js"></script>
-  <script src="gameService.js"></script>
-  <script src="messageService.js"></script>
-  <script src="stateService.js"></script>
+  <script src="http://yoav-zibin.github.io/emulator/scaleBodyService.js"></script>
+  <script src="http://yoav-zibin.github.io/emulator/gameService.js"></script>
+  <script src="http://yoav-zibin.github.io/emulator/messageService.js"></script>
+  <script src="http://yoav-zibin.github.io/emulator/stateService.js"></script>
   <script>
   var draggingon;
+  function startNewGame(){
+  location.reload();
+  }
   $(function() {
     $( "#alertbox" ).draggable();
   });
+  $(function() {
+  	if(window.innerHeight > window.innerWidth + 150){
+  		document.getElementById("alertbox").style.top = "-140px";
+  	}
+    else if(window.innerWidth > window.innerHeight + 180){
+    	document.getElementById("alertbox").style.left = "-170px";
+    }
+    else{
+    	document.getElementById("alertbox").style.display = "none";
+    }
+  });
   </script>
-
-  <!-- for local testing purposes ! -->
-  <script src="http://yoav-zibin.github.io/emulator/platform.js"></script>
   <link rel="stylesheet" type="text/css" href="game.css">
 </head>
 <body ng-controller="Ctrl">
