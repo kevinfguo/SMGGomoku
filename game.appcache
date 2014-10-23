@@ -11,6 +11,7 @@ game.js
 gameLogic.js
 game.css
 audio/move.wav
+audio/button-17.wav
 img/alertBg.png
 img/blackStone.png
 img/boardDark.png
