@@ -1,7 +1,8 @@
 'use strict';
-angular.module('myApp', ['ngTouch','myApp.aiService'])
+
+angular.module('myApp', ['ngTouch'])
   .controller('Ctrl', function (
-      $window, $scope, $log, $timeout,
+       $window, $scope, $log, $timeout,
       aiService, gameService, scaleBodyService, gameLogic) {
        var moveAudio = new Audio('audio/move.wav');
     moveAudio.load();
@@ -33,7 +34,7 @@ angular.module('myApp', ['ngTouch','myApp.aiService'])
     	$scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
         params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
         $scope.turnIndex = params.turnIndexAfterMove;
-        if ($scope.isYourTurn && params.yourPlayerIndex === 1) {
+        if ($scope.isYourTurn && params.playersInfo[params.yourPlayerIndex].playerId === '') {
         // Wait 500 milliseconds until animation ends.
         	$timeout(sendComputerMove, 600);
       	}
