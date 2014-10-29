@@ -38,13 +38,14 @@ angular.module('myApp', ['ngTouch'])
     	$scope.isAiWorking = false;
         if ($scope.isYourTurn && params.playersInfo[params.yourPlayerIndex].playerId === '') {
         // Wait 500 milliseconds until animation ends.
+        	$log.info("computer turn");
         	$scope.isAiWorking = true;
         	$timeout(sendComputerMove, 600);
       	}
     }
 
     function sendComputerMove() {
-    	$log.info(["computer moved"]);
+    	$log.info("computer moved");
         var aimove = [];
         if($scope.numOfMoves < 2){
         	aimove = firstAIMoveGenerator();
