@@ -29,17 +29,22 @@ angular.module('myApp', ['ngTouch'])
 		           		['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']];
       } else {
         // Only play a sound if there was a move (i.e., state is not empty).
+        $log.info(["sound played on Board:", $scope.board]);
         moveAudio.play();
       }
     	$scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
         params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
         $scope.turnIndex = params.turnIndexAfterMove;
+    	$scope.isAiWorking = false;
         if ($scope.isYourTurn && params.playersInfo[params.yourPlayerIndex].playerId === '') {
         // Wait 500 milliseconds until animation ends.
+        	$scope.isAiWorking = true;
         	$timeout(sendComputerMove, 600);
       	}
     }
+
     function sendComputerMove() {
+    	$log.info(["computer moved"]);
         var aimove = [];
         if($scope.numOfMoves < 2){
         	aimove = firstAIMoveGenerator();
