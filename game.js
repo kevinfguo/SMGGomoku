@@ -38,6 +38,7 @@ angular.module('myApp', ['ngTouch'])
     	$scope.isAiWorking = false;
         if ($scope.isYourTurn && params.playersInfo[params.yourPlayerIndex].playerId === '') {
         // Wait 500 milliseconds until animation ends.
+        	$window.document.getElementById("gamemsg").innerHTML = "AI thinking...";
         	$log.info("computer turn");
         	$scope.isAiWorking = true;
         	$timeout(sendComputerMove, 600);
@@ -173,11 +174,8 @@ angular.module('myApp', ['ngTouch'])
         $scope.numOfMoves++;
         aiService.informingComputer(row, col, 'black');
         if(!$scope.isFinished){
-        $window.document.getElementById("gamemsg").innerHTML = "AI thinking...";
+        $window.document.getElementById("gamemsg").innerHTML = "White's turn";
         }
-        }
-        else{
-        	return false;
         }
       } catch (e) {
         $log.info(["Cell is already full in position:", row, col]);
