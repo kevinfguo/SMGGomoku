@@ -177,6 +177,9 @@ angular.module('myApp', ['ngTouch'])
         $window.document.getElementById("gamemsg").innerHTML = "White's turn";
         }
         }
+        else{
+        	return false;
+        }
       } catch (e) {
         $log.info(["Cell is already full in position:", row, col]);
         return;
