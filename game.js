@@ -35,7 +35,7 @@ angular.module('myApp', ['ngTouch'])
     	$scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
         params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
         $scope.turnIndex = params.turnIndexAfterMove;
-    	$scope.isAiWorking = false;
+    	updateAIStatues();
         if ($scope.isYourTurn && params.playersInfo[params.yourPlayerIndex].playerId === '') {
         // Wait 500 milliseconds until animation ends.
         	$window.document.getElementById("gamemsg").innerHTML = "AI thinking...";
