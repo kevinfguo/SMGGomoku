@@ -6,6 +6,8 @@
 'use strict';
 angular.module('myApp').service('gameLogic', function() {
 function isEqual(object1, object2) {
+var a = JSON.stringify(object1);
+var b = JSON.stringify(object2);
 return JSON.stringify(object1) === JSON.stringify(object2);
 }
 function copyObject(object) {
