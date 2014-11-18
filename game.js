@@ -9,6 +9,9 @@ angular.module('myApp', ['ngTouch'])
     function updateUI(params) {
       $scope.board = params.stateAfterMove.board;
       $scope.delta = params.stateAfterMove.delta;
+      if (params.stateAfterMove.delta.row && params.stateAfterMove.delta.col){
+      	$scope.newMove = [params.stateAfterMove.delta.row, params.stateAfterMove.delta.col]
+      	}
       if ($scope.board === undefined) {
       	$scope.numOfMoves = 0;
       	$scope.isAiWorking = false;
