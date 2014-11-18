@@ -6,23 +6,10 @@
 'use strict';
 angular.module('myApp').service('gameLogic', function() {
 function isEqual(object1, object2) {
-var a = JSON.stringify(object1);
-var b = JSON.stringify(object2);
-return JSON.stringify(object1) === JSON.stringify(object2);
-}
-function isMoveEqual(move1, move2){
-	if (move2[0].setTurn){
-		if(!move1[0].setTurn){
-			return false
-		}
-		if(JSON.stringify(move2[0].setTurn) !== JSON.stringify(move1[0].setTurn)){
-			return false
-		}
-		
-	}
+return angular.equals(object1, object2);
 }
 function copyObject(object) {
-return JSON.parse(JSON.stringify(object));
+return angular.copy(object);
 }
 //this method creates an empty board
 function createNewBoard(){
