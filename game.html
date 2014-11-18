@@ -18,20 +18,6 @@
   <script src="http://yoav-zibin.github.io/emulator/messageService.js"></script>
   <script src="http://yoav-zibin.github.io/emulator/stateService.js"></script>
   <script>
-  function startNewGame(){
-  location.reload();
-  }
-  $(function() {
-  	if(window.innerHeight > window.innerWidth + 150){
-  		document.getElementById("alertbox").style.top = "-140px";
-  	}
-    else if(window.innerWidth > window.innerHeight + 180){
-    	document.getElementById("alertbox").style.left = "-170px";
-    }
-    else{
-    	document.getElementById("alertbox").style.display = "none";
-    }
-  });
   </script>
   <link rel="stylesheet" type="text/css" href="game.css">
 </head>
@@ -46,10 +32,6 @@
       </td>
     </tr>
   </table>
-  <div id="alertbox">
-  	<p id="gamemsg">Black's turn</p>
-  	<button id = "newgamebt" onclick="startNewGame()" style="width:150px; opacity: 0.8; height:30px; font-size: 15px; display: none">Start New Game</button>
-  </div>
   </div>
 </body>
 </html>

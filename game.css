@@ -8,18 +8,6 @@ table {
 	position: relative;
 }
 
-#alertbox{
-	position: absolute;
-	left: 20px;
-	top: 20px;
-	width: 150px;
-	height: 120px;
-	text-align:center;
-	font-size: 25px;
-	color: white;
-	background-image: url(img/alertBg.png);
-	display:block;
-}
 tr{
   border: none;
   margin: 0px;

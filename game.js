@@ -38,7 +38,6 @@ angular.module('myApp', ['ngTouch'])
     	updateAIStatues();
         if ($scope.isYourTurn && params.playersInfo[params.yourPlayerIndex].playerId === '') {
         // Wait 500 milliseconds until animation ends.
-        	$window.document.getElementById("gamemsg").innerHTML = "AI thinking...";
         	$log.info("computer turn");
         	$scope.isAiWorking = true;
         	$timeout(sendComputerMove, 600);
@@ -56,16 +55,12 @@ angular.module('myApp', ['ngTouch'])
         }
         $scope.newMove = aimove;
         gameService.makeMove(gameLogic.createMove($scope.board, aimove[0], aimove[1], $scope.turnIndex));
-        $scope.isFinished = updateMessage(gameLogic.createMove($scope.board, aimove[0], aimove[1], $scope.turnIndex));
         aiService.informingComputer(aimove[0], aimove[1], 'white');
         $timeout(updateAIStatues, 500);
         $scope.numOfMoves++;
     }
     function updateAIStatues(){
         $scope.isAiWorking = false;
-        if (!$scope.isFinished){
-        	$window.document.getElementById("gamemsg").innerHTML = "Black's turn";
-        }
     }
     updateUI({stateAfterMove: {}, turnIndexAfterMove: 0, yourPlayerIndex: -2});
     function iniAiService(){
@@ -96,46 +91,6 @@ angular.module('myApp', ['ngTouch'])
             }
         }
     }
-    /*
-    function sendMakeMove(move) {
-      $log.info(["Making move:", move]);
-      if (isLocalTesting) {
-        stateService.makeMove(move);
-      } else {
-        messageService.sendMessage({makeMove: move});
-      }
-      if('endMatch' in move[0]){
-				var score = move[0].endMatch.endMatchScores;
-				if(score[0] > score[1]){
-					$window.document.getElementById("gamemsg").innerHTML = "Game over, Black Wins";
-				}
-				else if(score[0] < score[1]){
-					$window.document.getElementById("gamemsg").innerHTML = "Game over, White Wins";
-				}
-				else{
-					$window.document.getElementById("gamemsg").innerHTML = "Game over, Ties";
-				}
-				setTimeout(function(){$window.document.getElementById("alertbox").style.display = "block";}, 1000);
-			}
-    }
-    */
-    function updateMessage(move){
-    if('endMatch' in move[0]){
-				var score = move[0].endMatch.endMatchScores;
-				if(score[0] > score[1]){
-					$window.document.getElementById("gamemsg").innerHTML = "Black Wins";
-				}
-				else if(score[0] < score[1]){
-					$window.document.getElementById("gamemsg").innerHTML = "White Wins";
-				}
-				else{
-					$window.document.getElementById("gamemsg").innerHTML = "Ties";
-				}
-				$window.document.getElementById("newgamebt").style.display = "block";
-				return true;
-		};
-		return false
-    };
     $scope.placeDot  = function(str, row, col){
     if(str ===''){
     	return 'img/empty.png';
@@ -170,12 +125,8 @@ angular.module('myApp', ['ngTouch'])
         $scope.newMove = [row, col];
         $scope.isYourTurn = false; // to prevent making another move
         gameService.makeMove(move);
-        $scope.isFinished = updateMessage(move);
         $scope.numOfMoves++;
         aiService.informingComputer(row, col, 'black');
-        if(!$scope.isFinished){
-        $window.document.getElementById("gamemsg").innerHTML = "White's turn";
-        }
         }
         else{
         	return false;
