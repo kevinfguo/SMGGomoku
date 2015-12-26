@@ -3,27 +3,20 @@ table {
   border: none;
   margin: 0px;
   padding: 0px;
+  position: relative;
 }
 #container{
 	position: relative;
 }
 
-#alertbox{
-	position: absolute;
-	left: 20px;
-	top: 20px;
-	width: 150px;
-	height: 120px;
-	text-align:center;
-	font-size: 25px;
-	color: white;
-	background-image: url(img/alertBg.png);
-	display:block;
-}
-tr{
+tr {
   border: none;
   margin: 0px;
   padding: 0px;
+  position: relative;
+}
+td {
+  position: relative;
 }
 body {
   margin: 0px;
@@ -34,15 +27,11 @@ body {
   vertical-align: middle;
   font-family: "Helvetica";
   font-size: 30pt;
-  width: 80px;
-  height: 80px;
   border: none;
   margin: 0px;
   padding: 0px;
 }
 .stone{
-  	width: 79px;
-  	height: 79px;
 	display: block;
 }
 .dark {
@@ -53,17 +42,26 @@ body {
 }
 
 .slowlyAppear {
-  -webkit-animation: slowlyAppear 0.02s ease-in; /* Chrome, Safari, Opera */
-  animation: slowlyAppear 0.02s ease-in;
-}
-/* Chrome, Safari, Opera */
-@-webkit-keyframes slowlyAppear {
-  from {height:30px;width:30px;margin-left:20px;margin-right:19px;}
-  to {height:79px;width:79px;margin-left:0px;margin-right:0px;}
+  -webkit-animation: slowlyAppear 0.5s linear;
+	-moz-animation: slowlyAppear 0.5s linear;
+	-ms-animation: slowlyAppear 0.5s linear;
+	-o-animation: slowlyAppear 0.5s linear;
+	animation: slowlyAppear 0.5s linear;
 }
 
-/* Standard syntax */
+@-webkit-keyframes slowlyAppear {
+  from {opacity: 0.1;}
+  to {opacity: 1;}
+}
+@-moz-keyframes slowlyAppear {
+  from {opacity: 0.1;}
+  to {opacity: 1;}
+}
+@-o-keyframes slowlyAppear {
+  from {opacity: 0.1;}
+  to {opacity: 1;}
+}
 @keyframes slowlyAppear {
-  from {height:30px;width:30px;margin-left:20px;margin-right:19px;}
-  to {height:79px;width:79px;margin-left:0px;margin-right:0px;}
+  from {opacity: 0.1;}
+  to {opacity: 1;}
 }
