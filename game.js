@@ -9,9 +9,6 @@ angular.module('myApp', ['ngTouch'])
     function updateUI(params) {
       $scope.board = params.stateAfterMove.board;
       $scope.delta = params.stateAfterMove.delta;
-      if (params.stateAfterMove.delta){
-      	$scope.newMove = [params.stateAfterMove.delta.row, params.stateAfterMove.delta.col]
-      	}
       if ($scope.board === undefined) {
       	$scope.numOfMoves = 0;
       	$scope.isAiWorking = false;
@@ -32,23 +29,17 @@ angular.module('myApp', ['ngTouch'])
 		           		['', '', '', '', '', '', '', '', '', '', '', '', '', '', '']];
       } else {
         // Only play a sound if there was a move (i.e., state is not empty).
-        $log.info(["sound played on Board:", $scope.board]);
         moveAudio.play();
       }
     	$scope.isYourTurn = params.turnIndexAfterMove >= 0 && // game is ongoing
         params.yourPlayerIndex === params.turnIndexAfterMove; // it's my turn
         $scope.turnIndex = params.turnIndexAfterMove;
-    	updateAIStatues();
         if ($scope.isYourTurn && params.playersInfo[params.yourPlayerIndex].playerId === '') {
         // Wait 500 milliseconds until animation ends.
-        	$log.info("computer turn");
-        	$scope.isAiWorking = true;
         	$timeout(sendComputerMove, 600);
       	}
     }
-
     function sendComputerMove() {
-    	$log.info("computer moved");
         var aimove = [];
         if($scope.numOfMoves < 2){
         	aimove = firstAIMoveGenerator();
@@ -58,12 +49,16 @@ angular.module('myApp', ['ngTouch'])
         }
         $scope.newMove = aimove;
         gameService.makeMove(gameLogic.createMove($scope.board, aimove[0], aimove[1], $scope.turnIndex));
+        $scope.isFinished = updateMessage(gameLogic.createMove($scope.board, aimove[0], aimove[1], $scope.turnIndex));
         aiService.informingComputer(aimove[0], aimove[1], 'white');
         $timeout(updateAIStatues, 500);
         $scope.numOfMoves++;
     }
     function updateAIStatues(){
         $scope.isAiWorking = false;
+        if (!$scope.isFinished){
+        	$window.document.getElementById("gamemsg").innerHTML = "Black's turn";
+        }
     }
     updateUI({stateAfterMove: {}, turnIndexAfterMove: 0, yourPlayerIndex: -2});
     function iniAiService(){
@@ -94,6 +89,46 @@ angular.module('myApp', ['ngTouch'])
             }
         }
     }
+    /*
+    function sendMakeMove(move) {
+      $log.info(["Making move:", move]);
+      if (isLocalTesting) {
+        stateService.makeMove(move);
+      } else {
+        messageService.sendMessage({makeMove: move});
+      }
+      if('endMatch' in move[0]){
+				var score = move[0].endMatch.endMatchScores;
+				if(score[0] > score[1]){
+					$window.document.getElementById("gamemsg").innerHTML = "Game over, Black Wins";
+				}
+				else if(score[0] < score[1]){
+					$window.document.getElementById("gamemsg").innerHTML = "Game over, White Wins";
+				}
+				else{
+					$window.document.getElementById("gamemsg").innerHTML = "Game over, Ties";
+				}
+				setTimeout(function(){$window.document.getElementById("alertbox").style.display = "block";}, 1000);
+			}
+    }
+    */
+    function updateMessage(move){
+    if('endMatch' in move[0]){
+				var score = move[0].endMatch.endMatchScores;
+				if(score[0] > score[1]){
+					$window.document.getElementById("gamemsg").innerHTML = "Black Wins";
+				}
+				else if(score[0] < score[1]){
+					$window.document.getElementById("gamemsg").innerHTML = "White Wins";
+				}
+				else{
+					$window.document.getElementById("gamemsg").innerHTML = "Ties";
+				}
+				$window.document.getElementById("newgamebt").style.display = "block";
+				return true;
+		};
+		return false
+    };
     $scope.placeDot  = function(str, row, col){
     if(str ===''){
     	return 'img/empty.png';
@@ -128,8 +163,12 @@ angular.module('myApp', ['ngTouch'])
         $scope.newMove = [row, col];
         $scope.isYourTurn = false; // to prevent making another move
         gameService.makeMove(move);
+        $scope.isFinished = updateMessage(move);
         $scope.numOfMoves++;
         aiService.informingComputer(row, col, 'black');
+        if(!$scope.isFinished){
+        $window.document.getElementById("gamemsg").innerHTML = "AI thinking...";
+        }
         }
         else{
         	return false;
@@ -147,8 +186,8 @@ angular.module('myApp', ['ngTouch'])
       gameDeveloperEmail: "punk0706@gmail.com",
       minNumberOfPlayers: 2,
       maxNumberOfPlayers: 2,
-      //exampleGame: gameLogic.getExampleGame(),
-      //riddles: gameLogic.getRiddles(),
+      exampleGame: gameLogic.getExampleGame(),
+      riddles: gameLogic.getRiddles(),
       isMoveOk: gameLogic.isMoveOk,
       updateUI: updateUI
     });
