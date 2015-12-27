@@ -95,7 +95,16 @@ module.exports = function(grunt) {
             'dist/everything.min.js',
             'game.css',
             'http://yoav-zibin.github.io/emulator/dist/turnBasedServices.3.min.js',
-            'http://yoav-zibin.github.io/emulator/main.css'
+            'http://yoav-zibin.github.io/emulator/main.css',
+            'img/blackStone.png',
+            'img/whiteStone.png',
+            'img/empty.png',
+            'img/boardDark.png',
+            'img/boardLight.png',
+            'img/boardbg.png',
+            'img/newblackStone.png',
+            'img/newwhiteStone.png',
+            'audio/move.wav'
           ],
           network: ['dist/everything.min.js.map', 'dist/everything.js'],
           timestamp: true
