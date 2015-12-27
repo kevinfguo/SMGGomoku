@@ -101,7 +101,6 @@ module.exports = function(grunt) {
             'img/empty.png',
             'img/boardDark.png',
             'img/boardLight.png',
-            'img/boardbg.png',
             'img/newblackStone.png',
             'img/newwhiteStone.png',
             'audio/move.wav'
