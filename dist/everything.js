@@ -342,6 +342,7 @@ var game;
             isMoveOk: gameLogic.isMoveOk,
             updateUI: updateUI
         });
+        iniAiService();
     }
     game.init = init;
     function updateUI(params) {
@@ -405,7 +406,7 @@ var game;
     game.updateAIStatues = updateAIStatues;
     updateUI({ stateAfterMove: {}, turnIndexAfterMove: 0, yourPlayerIndex: -2 });
     function iniAiService() {
-        aiService.iniComputer('hard');
+        aiService.iniComputer('easy');
     }
     game.iniAiService = iniAiService;
     function aiServiceMakeMove() {
@@ -550,8 +551,8 @@ var aiService;
     'use strict';
     var mapPoint = (function () {
         function mapPoint(r, c) {
-            r = r;
-            c = c;
+            this.r = r;
+            this.c = c;
             this.set = false;
             this.score = 0;
             this.valid = false;
@@ -603,7 +604,7 @@ var aiService;
         }
         switch (mode) {
             case 'easy':
-                depth = 5;
+                depth = 4;
                 totry = [12, 8];
                 break;
             case 'hard':
@@ -618,7 +619,6 @@ var aiService;
     aiService.ini = ini;
     ;
     function watch(r, c, color) {
-        console.log("row, col: ", r, c, "color: ", color);
         updateMap(r, c, color);
         if (color == 'remove') {
             setNum--;
@@ -640,7 +640,6 @@ var aiService;
             remove = true;
             num = map[r][c].set - 1;
         }
-        console.log("Got here");
         return _updateMap(r, c, num, remove);
     }
     aiService.updateMap = updateMap;
@@ -648,7 +647,6 @@ var aiService;
     function _updateMap(r, c, num, remove) {
         var i = 4, x, y, step, tmp, xx, yy, cur, changes = 0, s, e;
         if (!remove) {
-            console.log("Got here: Branch 1");
             boardBufArr[r * 15 + c] = num + 2;
             map[r][c].set = num + 1;
             while (i--) {
@@ -701,7 +699,6 @@ var aiService;
             }
         }
         else {
-            console.log("Got here: Branch 2");
             boardBufArr[r * 15 + c] = 0;
             map[r][c].set = false;
             while (i--) {
@@ -803,8 +800,8 @@ var aiService;
     aiService.sortMove = sortMove;
     ;
     cache = {};
-    function nega(x, y, depth, alpha, beta) {
-        var pt = map[x][y].info, i = 4, num = depth % 2;
+    function nega(x, y, this_depth, alpha, beta) {
+        var pt = map[x][y].info, i = 4, num = this_depth % 2;
         simulate(x, y, num);
         var bufstr = bufToString();
         if (cache[bufstr]) {
@@ -815,7 +812,7 @@ var aiService;
         if (setNum === 225) {
             return 0;
         }
-        else if (depth === 0) {
+        else if (this_depth === 0) {
             return sum;
         }
         scorequeue.sort(sortMove);
@@ -827,12 +824,12 @@ var aiService;
             tmpqueue.push(tmp.c);
             tmpqueue.push(tmp.r);
         }
-        depth -= 1;
+        this_depth -= 1;
         i = tmpqueue.length - 1;
         x = tmpqueue[i];
         y = tmpqueue[--i];
-        var score = -nega(x, y, depth, -b, -alpha);
-        desimulate(x, y, depth % 2);
+        var score = -nega(x, y, this_depth, -b, -alpha);
+        desimulate(x, y, this_depth % 2);
         if (score > alpha) {
             bufstr = bufToString();
             cache[bufstr] = score;
@@ -847,11 +844,11 @@ var aiService;
         while (i--) {
             x = tmpqueue[i];
             y = tmpqueue[--i];
-            score = -nega(x, y, depth, -b, -alpha);
-            desimulate(x, y, depth % 2);
+            score = -nega(x, y, this_depth, -b, -alpha);
+            desimulate(x, y, this_depth % 2);
             if (alpha < score && score < beta) {
-                score = -nega(x, y, depth, -beta, -alpha);
-                desimulate(x, y, depth % 2);
+                score = -nega(x, y, this_depth, -beta, -alpha);
+                desimulate(x, y, this_depth % 2);
             }
             if (score > alpha) {
                 alpha = score;
@@ -868,7 +865,7 @@ var aiService;
     function move() {
         cache = {};
         var alpha = -1 / 0, beta = 1 / 0, bestmove = [scorequeue[0].r, scorequeue[0].c];
-        var i = 20, tmp, tmpqueue = [], depth = depth;
+        var i = 20, tmp, tmpqueue = [], this_depth = depth;
         while (i--) {
             tmp = scorequeue[i];
             if (tmp.score.set)
@@ -880,8 +877,8 @@ var aiService;
         var x, y, b = beta;
         x = tmpqueue[i];
         y = tmpqueue[--i];
-        var score = -nega(x, y, depth, -b, -alpha);
-        desimulate(x, y, depth % 2);
+        var score = -nega(x, y, this_depth, -b, -alpha);
+        desimulate(x, y, this_depth % 2);
         if (score > alpha) {
             alpha = score;
             bestmove = [x, y];
@@ -890,11 +887,11 @@ var aiService;
         while (i--) {
             x = tmpqueue[i];
             y = tmpqueue[--i];
-            score = -nega(x, y, depth, -b, -alpha);
-            desimulate(x, y, depth % 2);
+            score = -nega(x, y, this_depth, -b, -alpha);
+            desimulate(x, y, this_depth % 2);
             if (alpha < score && score < beta) {
-                score = -nega(x, y, depth, -beta, -alpha);
-                desimulate(x, y, depth % 2);
+                score = -nega(x, y, this_depth, -beta, -alpha);
+                desimulate(x, y, this_depth % 2);
             }
             if (score > alpha) {
                 alpha = score;

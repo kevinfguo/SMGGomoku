@@ -13,8 +13,8 @@ module aiService{
     valid : any;
     info : any;
     constructor(r : any, c : any){
-      r=r;
-      c=c;
+      this.r=r;
+      this.c=c;
       this.set=false;
       this.score=0;
       this.valid=false;
@@ -68,7 +68,7 @@ module aiService{
       }
       switch(mode){
           case 'easy':
-          depth=5;
+          depth=4;
           totry=[12,8];
           break;
           case 'hard':
@@ -81,7 +81,6 @@ module aiService{
       console.log('ini complete');
   };
   export function watch(r : any,c : any,color : any){
-    console.log("row, col: ", r, c, "color: ", color)
     updateMap(r,c,color);
     if(color=='remove'){
       setNum--;
@@ -101,18 +100,15 @@ module aiService{
           remove=true;
           num=map[r][c].set-1;
       }
-      console.log("Got here");
       return _updateMap(r,c,num,remove);
   };
 
   export function _updateMap(r : any,c : any,num : any,remove : any){
       var i=4,x : any,y : any,step : any,tmp : any,xx : any,yy : any,cur : any,changes=0,s : any,e : any;
-      if(!remove){
-        console.log("Got here: Branch 1");
+      if (!remove){
           boardBufArr[r * 15 + c] = num + 2;
           map[r][c].set=num+1;
-          while(i--){
-
+          while (i--){
               x=r;
               y=c;
               step=5;
@@ -160,7 +156,6 @@ module aiService{
               }
           }
       }else{
-        console.log("Got here: Branch 2");
           boardBufArr[r * 15 + c] = 0;
           map[r][c].set=false;
           while(i--){
@@ -253,8 +248,8 @@ module aiService{
 
   cache={};
 
-  export function nega(x : any,y : any,depth : any,alpha : any,beta : any){
-      var pt=map[x][y].info, i=4, num=depth%2;
+  export function nega(x : any,y : any,this_depth : any,alpha : any,beta : any){
+      var pt=map[x][y].info, i=4, num=this_depth%2;
       simulate(x,y,num);
       var bufstr = bufToString();
       if(cache[bufstr]){
@@ -263,7 +258,7 @@ module aiService{
       if(Math.abs(sum)>=10000000)return -1/0;
       if(setNum===225){
           return 0;
-      }else if(depth===0){
+      }else if(this_depth===0){
           return sum;
       }
       scorequeue.sort(sortMove);
@@ -274,12 +269,12 @@ module aiService{
           tmpqueue.push(tmp.c);
           tmpqueue.push(tmp.r);
       }
-      depth-=1;
+      this_depth-=1;
       i=tmpqueue.length-1;
       x=tmpqueue[i];
       y=tmpqueue[--i];
-      var score=-nega(x,y,depth,-b,-alpha);
-      desimulate(x,y,depth%2);
+      var score=-nega(x,y,this_depth,-b,-alpha);
+      desimulate(x,y,this_depth%2);
       if(score>alpha){
           bufstr = bufToString();
           cache[bufstr] = score;
@@ -294,11 +289,11 @@ module aiService{
       while(i--){
           x=tmpqueue[i];
           y=tmpqueue[--i];
-          score=-nega(x,y,depth,-b,-alpha);
-          desimulate(x,y,depth%2);
+          score=-nega(x,y,this_depth,-b,-alpha);
+          desimulate(x,y,this_depth%2);
           if(alpha<score && score<beta){
-              score=-nega(x,y,depth,-beta,-alpha);
-              desimulate(x,y,depth%2);
+              score=-nega(x,y,this_depth,-beta,-alpha);
+              desimulate(x,y,this_depth%2);
           }
           if(score>alpha){
               alpha=score;
@@ -314,7 +309,7 @@ module aiService{
   export function move(){
       cache={};
       var alpha=-1/0, beta=1/0,bestmove=[scorequeue[0].r, scorequeue[0].c];
-      var i=20, tmp : any, tmpqueue : any=[],depth : any=depth;
+      var i=20, tmp : any, tmpqueue : any=[], this_depth : any=depth;
       while(i--){
           tmp=scorequeue[i];
           if(tmp.score.set)continue;
@@ -325,8 +320,8 @@ module aiService{
       var x : any,y : any,b=beta;
       x=tmpqueue[i];
       y=tmpqueue[--i];
-      var score=-nega(x,y,depth,-b,-alpha);
-      desimulate(x,y,depth%2);
+      var score=-nega(x,y,this_depth,-b,-alpha);
+      desimulate(x,y,this_depth%2);
       if(score>alpha){
           alpha=score;
           bestmove=[x,y];
@@ -335,11 +330,11 @@ module aiService{
       while(i--){
           x=tmpqueue[i];
           y=tmpqueue[--i];
-          score=-nega(x,y,depth,-b,-alpha);
-          desimulate(x,y,depth%2);
+          score=-nega(x,y,this_depth,-b,-alpha);
+          desimulate(x,y,this_depth%2);
           if(alpha<score && score<beta){
-              score=-nega(x,y,depth,-beta,-alpha);
-              desimulate(x,y,depth%2);
+              score=-nega(x,y,this_depth,-beta,-alpha);
+              desimulate(x,y,this_depth%2);
           }
           if(score>alpha){
               alpha=score;

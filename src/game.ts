@@ -33,6 +33,7 @@ module game{
       isMoveOk: gameLogic.isMoveOk,
       updateUI: updateUI
     });
+    iniAiService();
   }
 
   export function updateUI(params : any) {
@@ -96,7 +97,7 @@ module game{
     updateUI({stateAfterMove: {}, turnIndexAfterMove: 0, yourPlayerIndex: -2});
 
     export function iniAiService(){
-    	aiService.iniComputer('hard');
+    	aiService.iniComputer('easy');
     }
 
     export function aiServiceMakeMove(){

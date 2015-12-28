@@ -28,6 +28,7 @@ var game;
             isMoveOk: gameLogic.isMoveOk,
             updateUI: updateUI
         });
+        iniAiService();
     }
     game.init = init;
     function updateUI(params) {
@@ -91,7 +92,7 @@ var game;
     game.updateAIStatues = updateAIStatues;
     updateUI({ stateAfterMove: {}, turnIndexAfterMove: 0, yourPlayerIndex: -2 });
     function iniAiService() {
-        aiService.iniComputer('hard');
+        aiService.iniComputer('easy');
     }
     game.iniAiService = iniAiService;
     function aiServiceMakeMove() {
