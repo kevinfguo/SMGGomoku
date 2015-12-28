@@ -200,6 +200,7 @@ var game;
                 gameService.makeMove(move);
                 //isFinished = updateMessage(move);
                 numOfMoves++;
+                aiService.informingComputer(row, col, 'black');
             }
             else {
                 return false;

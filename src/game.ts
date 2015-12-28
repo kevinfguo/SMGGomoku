@@ -206,7 +206,7 @@ module game{
           gameService.makeMove(move);
           //isFinished = updateMessage(move);
           numOfMoves++;
-          // aiService.informingComputer(row, col, 'black');
+          aiService.informingComputer(row, col, 'black');
           // log.info("got here");
           // if(!isFinished){
           //   document.getElementById("gamemsg").innerHTML = "AI thinking...";
