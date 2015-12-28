@@ -15,6 +15,7 @@ var game;
     var turnIndex;
     var newMove;
     var isFinished;
+    game.isHelpModalShown = false;
     var moveAudio = new Audio('audio/move.wav');
     moveAudio.load();
     // iniAiService();

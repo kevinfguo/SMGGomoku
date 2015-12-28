@@ -16,6 +16,7 @@ module game{
   var turnIndex: any;
   var newMove : any;
   var isFinished : any;
+  export let isHelpModalShown: boolean = false;
 
 
   var moveAudio = new Audio('audio/move.wav');
