@@ -329,11 +329,12 @@ var game;
     var turnIndex;
     var newMove;
     var isFinished;
+    game.isHelpModalShown = false;
     var moveAudio = new Audio('audio/move.wav');
     moveAudio.load();
     // iniAiService();
     function init() {
-        console.log("Translation of 'RULES_OF_OWARE' is " + translate('RULES_OF_OWARE'));
+        console.log("Translation of 'RULES_OF_GOMOKU' is " + translate('RULES_OF_GOMOKU'));
         resizeGameAreaService.setWidthToHeight(1);
         gameService.setGame({
             minNumberOfPlayers: 2,
@@ -535,13 +536,9 @@ angular.module('myApp', ['ngTouch', 'ui.bootstrap', 'gameServices'])
     .run(function () {
     $rootScope['game'] = game;
     translate.setLanguage('en', {
-        RULES_OF_OWARE: "Rules of OWARE",
-        RULES_SLIDE1: "To sow you must take all the seeds of  any of your holes and lay its out along the holes against the direction of the clockwise. In every hole you should lay it out one seed.  If you reach the last hole of your ground you must continue in the land of the other player. Remember, you always have to lay out seeds in the direction against the clockwise.",
-        RULES_SLIDE2: "If the last hole where you sow is in the land of the other player and there are two or three seeds in the last hole remove from the board and keep them. If the previous holes also contain two or three seeds also remove them and remove all the seeds of your opponent that contains two or three seeds.",
-        RULES_SLIDE3: "As the game progresses, it is possible that one hole contains more than 12 seeds. This hole is called Kroo and makes possible complete one round. When the harvest starts at the Kroo, this hole must finish empty what means that the player shouldn’t lay out any seed.",
-        RULES_SLIDE4: "To play a run  and  leaves the other player with no seeds to continue playing is not allowed. If you do it you will lose the game.",
-        RULES_SLIDE5: "If the other player has only one seed in his field you will have to remove it in order to harvest and continue playing. Players must provide in advance to avoid this situation. If this is impossible, because we only have one seed in our land. The game is finished. The winner is the one that harvest more.",
-        RULES_SLIDE6: "Game ends with a player having more than 23 seeds in his house. When there are few seeds left on the counter, the game may be perpetuating and hardly any of the 2 players can capture any new seed. By mutual agreement player can agree the end of the game. In this case every player is the owner of the seeds in his side.  As always, who has garnered more wins the match.",
+        RULES_OF_GOMOKU: "Rules of Gomoku",
+        RULES_SLIDE1: "In Gomoku, each player takes turns placing a stone on the board, starting with black.",
+        RULES_SLIDE2: "The first player to connect 5 of their pieces in a row, either horizontially, vertically or diagonally is declared the winner.",
         CLOSE: "Close"
     });
     game.init();

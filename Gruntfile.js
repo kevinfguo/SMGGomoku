@@ -103,6 +103,8 @@ module.exports = function(grunt) {
             'img/boardLight.png',
             'img/newblackStone.png',
             'img/newwhiteStone.png',
+            'img/slide1.png',
+            'img/slide2.png',
             'audio/move.wav'
           ],
           network: ['dist/everything.min.js.map', 'dist/everything.js'],
